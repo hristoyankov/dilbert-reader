@@ -3,11 +3,10 @@
 </head>
 
 <body>
-  <h1>Dilbert reader</h1>
-
   {{> strip}}
 </body>
 
 <template name="strip">
-  <p>Is it you Wally?</p>
+  <h1>{{dilbert_strip_title}}</h1>
+  <img src={{dilbert_strip_url}} alt=''>
 </template>
