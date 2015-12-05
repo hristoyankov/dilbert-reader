@@ -1,6 +1,17 @@
 if (Meteor.isClient) {
+    var get_random_date = function(end) {
+        var start = new Date(1989, 04, 16); // First dilbert issue!
+        var diff = end.getTime() - start.getTime();
+        var new_diff = diff * Math.random();
+        return new Date(start.getTime() + new_diff);
+    }
+    
+    var get_dilbert_url = function(date) {
+        return 'http://dilbert.com/strip/' + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+    }
+
     Template.strip.onRendered(function () {
-        Meteor.call('get_dilbert_strip', 'http://dilbert.com/strip/2015-12-04', function(err, response) {
+        Meteor.call('get_dilbert_strip', get_dilbert_url(new Date()), function(err, response) {
             if (err)
                 console.log(err);
             else {
@@ -20,7 +31,7 @@ if (Meteor.isClient) {
 
     Template.strip.events({
         "click #randomDilbert": function() {
-            Meteor.call('get_dilbert_strip', 'http://dilbert.com/strip/2015-11-04', function(err, response) {
+            Meteor.call('get_dilbert_strip', get_dilbert_url(get_random_date(new Date())), function(err, response) {
                 if (err)
                     console.log(err);
                 else
@@ -34,7 +45,6 @@ if (Meteor.isServer) {
     Meteor.startup(function () {
         Meteor.methods({
             get_dilbert_strip: function (url) {
-                console.log('In get_dilbert_strip');
                 var data = Scrape.website(url);
 
                 return {title: data.title, img_url: data.image};
