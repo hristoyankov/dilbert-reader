@@ -1,13 +1,25 @@
 <head>
-  <title>dilbert-reader</title>
+  <title>dilbert reader</title>
 </head>
 
 <body>
-  {{> strip}}
+  <section>
+    <header>
+      <h1>Better Dilbert Reader</h1>
+      <hr>
+    </header>
+
+    {{> strip}}
+  </section>
 </body>
 
 <template name="strip">
-  <h1>{{dilbert_strip_title}}</h1>
+  <h2>{{dilbert_strip_title}}</h2>
   <img src={{dilbert_strip_url}} alt=''>
-  <button id="randomDilbert">Random Dilbert!</button>
+  <br>
+  <div id="buttons">
+    <button id="prevDilbert">Previous</button>
+    <button id="randomDilbert">Random Dilbert!</button>
+    <button id="nextDilbert">Next</button>
+  </div>
 </template>
