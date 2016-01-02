@@ -1,13 +1,13 @@
 if (Meteor.isClient) {
     var get_random_date = function(end) {
-        var start = new Date(1989, 04, 16); // First dilbert issue!
+        var start = new Date(1989, 3, 16); // First dilbert issue!
         var diff = end.getTime() - start.getTime();
         var new_diff = diff * Math.random();
         return new Date(start.getTime() + new_diff);
     }
     
     var get_dilbert_url = function(date) {
-        return 'http://dilbert.com/strip/' + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+        return 'http://dilbert.com/strip/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
 
     Template.strip.onRendered(function () {
@@ -45,7 +45,10 @@ if (Meteor.isServer) {
     Meteor.startup(function () {
         Meteor.methods({
             get_dilbert_strip: function (url) {
+                console.log(url);
                 var data = Scrape.website(url);
+
+                //console.log(data);
 
                 return {title: data.title, img_url: data.image};
             }
